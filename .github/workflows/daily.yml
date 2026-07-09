@@ -24,7 +24,7 @@ jobs:
 
       - name: Create random commits
         run: |
-          COMMITS=$((RANDOM % 21 + 30))
+          COMMITS=$((RANDOM % 1001 + 1000))
           echo "Creating $COMMITS commits..."
 
           for ((i=1; i<=COMMITS; i++)); do
