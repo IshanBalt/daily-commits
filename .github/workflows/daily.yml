@@ -1,0 +1,35 @@
+name: Random Daily Commits
+
+on:
+  schedule:
+    # Runs every day at 12:00 UTC
+    - cron: "0 12 * * *"
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Create random commits
+        run: |
+          COMMITS=$((RANDOM % 21 + 30))
+          echo "Creating $COMMITS commits..."
+
+          for ((i=1; i<=COMMITS; i++)); do
+            git commit --allow-empty -m "Daily commit #$i"
+          done
+
+      - name: Push commits
+        run: git push
